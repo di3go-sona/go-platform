@@ -1,0 +1,10 @@
+{
+    "Linux": "linux",
+    "Darwin": "darwin",
+    "FreeBSD": "freebsd",
+    "OpenBSD": "openbsd",
+    "NetBSD": "netbsd",
+    "DragonFly": "dragonfly",
+    "SunOS": "solaris",
+    "AIX": "aix"
+  }
