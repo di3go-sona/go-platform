@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'os' | 'arch' | 'platform'>('os')
+  const [baseUrl, setBaseUrl] = useState('')
+
+  useEffect(() => {
+    setBaseUrl(window.location.origin)
+  }, [])
 
   const tabs = [
     { id: 'os' as const, label: 'Operating System' },
@@ -54,11 +59,11 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-4">Set GOOS from current system:</h3>
                   <div className="relative">
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf /api/os/$(uname -s))</div>
+                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s))</div>
                     </div>
                     <button 
                       className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText('GOOS=$(curl -sf /api/os/$(uname -s))')}
+                      onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s))`)}
                     >
                       Copy
                     </button>
@@ -82,11 +87,11 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-4">Set GOARCH from current system:</h3>
                   <div className="relative">
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOARCH=$(curl -sf /api/arch/$(uname -m))</div>
+                      <div>GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m))</div>
                     </div>
                     <button 
                       className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText('GOARCH=$(curl -sf /api/arch/$(uname -m))')}
+                      onClick={() => navigator.clipboard.writeText(`GOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m))`)}
                     >
                       Copy
                     </button>
@@ -110,12 +115,12 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-4">Set both environment variables:</h3>
                   <div className="relative">
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf /api/os/$(uname -s))</div>
-                      <div>GOARCH=$(curl -sf /api/arch/$(uname -m))</div>
+                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s))</div>
+                      <div>GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m))</div>
                     </div>
                     <button 
                       className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText('GOOS=$(curl -sf /api/os/$(uname -s))\nGOARCH=$(curl -sf /api/arch/$(uname -m))')}
+                      onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s))\nGOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m))`)}
                     >
                       Copy
                     </button>
@@ -126,11 +131,11 @@ export default function Home() {
                   <h3 className="text-xl font-semibold mb-4">One-liner for cross-compilation:</h3>
                   <div className="relative">
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf /api/os/$(uname -s)) GOARCH=$(curl -sf /api/arch/$(uname -m)) go build</div>
+                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s)) GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m)) go build</div>
                     </div>
                     <button 
                       className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText('GOOS=$(curl -sf /api/os/$(uname -s)) GOARCH=$(curl -sf /api/arch/$(uname -m)) go build')}
+                      onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s)) GOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m)) go build`)}
                     >
                       Copy
                     </button>
