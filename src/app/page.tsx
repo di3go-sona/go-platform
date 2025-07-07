@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { ThemeSwitcher } from '@/components/theme-switcher'
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'os' | 'arch' | 'platform'>('os')
+  const [activeTab, setActiveTab] = useState<'os' | 'arch'>('os')
   const [baseUrl, setBaseUrl] = useState('')
 
   useEffect(() => {
@@ -14,7 +14,6 @@ export default function Home() {
   const tabs = [
     { id: 'os' as const, label: 'Operating System' },
     { id: 'arch' as const, label: 'Architecture' },
-    { id: 'platform' as const, label: 'Platform' },
   ]
 
   return (
@@ -28,7 +27,7 @@ export default function Home() {
       </header> */}
       <main className="rounded-br-base rounded-tr-base bg-background relative h-[800px] max-h-[100dvh] flex-col font-semibold portrait:h-[100dvh] portrait:max-h-[100dvh] portrait:rounded-none">
         {/* Tab Navigation */}
-        <nav className="border-b-border rounded-tr-base w600:text-lg w400:h-10 w400:text-base grid h-[50px] grid-cols-[1fr_1fr_1fr_50px] border-b-4 bg-black text-xl portrait:rounded-none">
+        <nav className="border-b-border rounded-tr-base w600:text-lg w400:h-10 w400:text-base grid h-[50px] grid-cols-[1fr_1fr_50px] border-b-4 bg-black text-xl portrait:rounded-none">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -69,6 +68,21 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Alternative using wget:</h3>
+                  <div className="relative">
+                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
+                      <div>GOOS=$(wget -qO- {baseUrl}/api/os/$(uname -s))</div>
+                    </div>
+                    <button 
+                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
+                      onClick={() => navigator.clipboard.writeText(`GOOS=$(wget -qO- ${baseUrl}/api/os/$(uname -s))`)}
+                    >
+                      Copy
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -97,45 +111,16 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
 
-          {activeTab === 'platform' && (
-            <div className="p-10 space-y-8 w-full">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold mb-4">Complete Platform Detection</h1>
-                <p className="text-lg text-muted-foreground">
-                  Set both GOOS and GOARCH from current system
-                </p>
-              </div>
-
-              <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Set both environment variables:</h3>
+                  <h3 className="text-xl font-semibold mb-4">Alternative using wget:</h3>
                   <div className="relative">
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s))</div>
-                      <div>GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m))</div>
+                      <div>GOARCH=$(wget -qO- {baseUrl}/api/arch/$(uname -m))</div>
                     </div>
                     <button 
                       className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s))\nGOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m))`)}
-                    >
-                      Copy
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">One-liner for cross-compilation:</h3>
-                  <div className="relative">
-                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s)) GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m)) go build</div>
-                    </div>
-                    <button 
-                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
-                      onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s)) GOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m)) go build`)}
+                      onClick={() => navigator.clipboard.writeText(`GOARCH=$(wget -qO- ${baseUrl}/api/arch/$(uname -m))`)}
                     >
                       Copy
                     </button>
