@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { os: string } }
+  { params }: { params: Promise<{ os: string }> }
 ) {
   try {
     // Read the os.json file

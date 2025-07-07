@@ -1,55 +1,129 @@
-<img src="public/preview.png" />
+# Go Platform API
 
-# Windowed portfolio
+A Next.js API service that provides Go cross-compilation platform mappings from system architecture and OS names to their corresponding `GOOS` and `GOARCH` values.
 
-Windowed portfolio is a neobrutalism-styled nextjs tailwind template for portfolios.
+## Features
 
-## Get started
+- **Architecture API**: `/api/arch/{arch}` - Convert system architecture names to Go `GOARCH` values
+- **OS API**: `/api/os/{os}` - Convert system OS names to Go `GOOS` values
+- **Plain text responses** - Perfect for shell scripts and automation
+- **Interactive web interface** - Copy commands with one click
+- **Comprehensive mappings** - Supports all major architectures and operating systems
 
-[Create a new repo](https://github.com/neobrutalism-templates/windowed-portfolio/generate) from this template.
+## API Endpoints
+
+### Architecture Mapping
+```bash
+# Get Go architecture for current system
+curl /api/arch/$(uname -m)
+
+# Examples
+curl /api/arch/x86_64    # Returns: amd64
+curl /api/arch/aarch64   # Returns: arm64
+curl /api/arch/armv7     # Returns: arm
+```
+
+### OS Mapping
+```bash
+# Get Go OS for current system
+curl /api/os/$(uname -s)
+
+# Examples
+curl /api/os/Linux   # Returns: linux
+curl /api/os/Darwin  # Returns: darwin
+curl /api/os/FreeBSD # Returns: freebsd
+```
+
+## Quick Start
+
+### Set environment variables for cross-compilation:
+```bash
+# Set GOOS and GOARCH from current system
+GOOS=$(curl -sf /api/os/$(uname -s))
+GOARCH=$(curl -sf /api/arch/$(uname -m))
+
+# One-liner for building
+GOOS=$(curl -sf /api/os/$(uname -s)) GOARCH=$(curl -sf /api/arch/$(uname -m)) go build
+```
+
+## Supported Mappings
+
+### Architectures
+- **x86**: `x86_64`, `amd64`, `i386`, `i686` → `amd64`, `386`
+- **ARM**: `armv7`, `armv8`, `aarch64`, `arm64` → `arm`, `arm64`
+- **Others**: `riscv64`, `mips`, `ppc64le`, `s390x`, `loongarch64`, `sparc64`
+
+### Operating Systems
+- **Unix-like**: `Linux`, `Darwin`, `FreeBSD`, `OpenBSD`, `NetBSD`, `DragonFly`
+- **Others**: `SunOS` (Solaris), `AIX`
+
+## Development
 
 ### Installation
+```bash
+pnpm install
+```
 
-This template uses `pnpm` package manager so make sure you have it installed.
+### Run locally
+```bash
+pnpm dev
+```
 
-To install all dependencies run:
+### Build for production
+```bash
+pnpm build
+pnpm start
+```
+
+## Usage Examples
+
+### Shell Script
+```bash
+#!/bin/bash
+GOOS=$(curl -sf /api/os/$(uname -s))
+GOARCH=$(curl -sf /api/arch/$(uname -m))
+
+if [ $? -eq 0 ]; then
+    echo "Building for GOOS=$GOOS GOARCH=$GOARCH"
+    GOOS=$GOOS GOARCH=$GOARCH go build -o myapp-$GOOS-$GOARCH
+else
+    echo "Failed to determine Go platform"
+    exit 1
+fi
+```
+
+### Makefile
+```makefile
+BINARY_NAME=myapp
+
+detect-platform:
+	@GOARCH=$$(curl -sf /api/arch/$$(uname -m)) && \
+	GOOS=$$(curl -sf /api/os/$$(uname -s)) && \
+	echo "GOOS=$$GOOS GOARCH=$$GOARCH"
+
+build-current:
+	@GOARCH=$$(curl -sf /api/arch/$$(uname -m)) && \
+	GOOS=$$(curl -sf /api/os/$$(uname -s)) && \
+	GOOS=$$GOOS GOARCH=$$GOARCH go build -o $(BINARY_NAME)-$$GOOS-$$GOARCH
+```
+
+## Tech Stack
+
+- **Next.js 15** - App Router with server-side API routes
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Neobrutalism Design** - Bold, modern UI
+
+## API Response Format
+
+All API endpoints return plain text responses for easy shell integration:
 
 ```bash
-pnpm i
+# Success - returns just the value
+$ curl /api/arch/x86_64
+amd64
+
+# Error - returns JSON with 404/500 status
+$ curl /api/arch/invalid
+{"error":"Architecture 'invalid' not found"}
 ```
-
-To run the app locally:
-
-```bash
-pnpm run dev
-```
-
-### Config
-
-- Inside `layout.tsx` update the metadata
-- Inside `page.tsx` update the content
-- Update the `favicon.ico`
-
-### Content config
-
-#### Links on the home page
-
-To update the links on the home page go to `src/app/page.tsx` and inside `links` array add or remove objects. Each object has 2 properties, `icon`, and `href`. `href` is self-explanatory, and inside `icon` you'll put an icon imported from `@icons-pack/react-simple-icons`. Visit [simpleicons.org](https://simpleicons.org/) to see all the icons. Import them by adding `Si` prefix to their name as I imported them in `links` component.
-
-#### Updating the `previewImage` in `src/app/work/page.tsx`
-
-Make sure to put `/` + name of the picture that's inside public folder. e.g. you have a `my-project.png` picture inside `public` folder, you'll type:
-
-```ts
-previewImage: '/my-project.png'
-```
-
-##### Image aspect ratio
-
-Inside `app/work/page.tsx` `previewImage` is wrapped inside AspectRatio component. Change the `ratio` prop so it suits your needs (default preview images are 600 x 300, so I set the ratio to be `2 / 1`).
-
-### Styling
-
-To change the styling visit [styling docs](https://neobrutalism.dev/styling), and copy the desired styling to your css like it's shown in the styling docs.
-
-I didn't add custom font weights for this template since I think it's best that way.

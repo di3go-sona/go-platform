@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { arch: string } }
+  { params }: { params: Promise<{ arch: string }> }
 ) {
   try {
     // Read the arch.json file
