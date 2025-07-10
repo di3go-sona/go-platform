@@ -48,38 +48,39 @@ export default function Home() {
             <div className="p-10 space-y-8 w-full">
               <div className="text-center">
                 <h1 className="text-4xl font-bold mb-4">Operating System (GOOS)</h1>
-                <p className="text-lg text-muted-foreground">
-                  Get Go OS mappings from system OS names
-                </p>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Set GOOS from current system:</h3>
-                  <div className="relative">
-                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s))</div>
+                  <h3 className="text-xl font-semibold mb-4">Using curl:</h3>
+                  <div className="relative group">
+                    <div className="bg-gray-900 dark:bg-gray-800 border border-gray-700 rounded-lg p-4 overflow-x-auto">
+                      <pre className="text-white font-mono text-sm whitespace-pre-wrap">
+                        <code>GOOS=$(curl -sf {baseUrl}/api/os/$(uname -s))</code>
+                      </pre>
                     </div>
                     <button 
-                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
+                      className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                       onClick={() => navigator.clipboard.writeText(`GOOS=$(curl -sf ${baseUrl}/api/os/$(uname -s))`)}
                     >
-                      Copy
+                      📋 Copy
                     </button>
                   </div>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-semibold mb-4">Alternative using wget:</h3>
-                  <div className="relative">
-                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOOS=$(wget -qO- {baseUrl}/api/os/$(uname -s))</div>
+                  <div className="relative group">
+                    <div className="bg-gray-900 dark:bg-gray-800 border border-gray-700 rounded-lg p-4 overflow-x-auto">
+                      <pre className="text-white font-mono text-sm whitespace-pre-wrap">
+                        <code>GOOS=$(wget -qO- {baseUrl}/api/os/$(uname -s))</code>
+                      </pre>
                     </div>
                     <button 
-                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
+                      className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                       onClick={() => navigator.clipboard.writeText(`GOOS=$(wget -qO- ${baseUrl}/api/os/$(uname -s))`)}
                     >
-                      Copy
+                      📋 Copy
                     </button>
                   </div>
                 </div>
@@ -91,38 +92,39 @@ export default function Home() {
             <div className="p-10 space-y-8 w-full">
               <div className="text-center">
                 <h1 className="text-4xl font-bold mb-4">Architecture (GOARCH)</h1>
-                <p className="text-lg text-muted-foreground">
-                  Get Go architecture mappings from system architecture names
-                </p>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Set GOARCH from current system:</h3>
-                  <div className="relative">
-                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m))</div>
+                  <h3 className="text-xl font-semibold mb-4">Using curl:</h3>
+                  <div className="relative group">
+                    <div className="bg-gray-900 dark:bg-gray-800 border border-gray-700 rounded-lg p-4 overflow-x-auto">
+                      <pre className="text-white font-mono text-sm whitespace-pre-wrap">
+                        <code>GOARCH=$(curl -sf {baseUrl}/api/arch/$(uname -m))</code>
+                      </pre>
                     </div>
                     <button 
-                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
+                      className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                       onClick={() => navigator.clipboard.writeText(`GOARCH=$(curl -sf ${baseUrl}/api/arch/$(uname -m))`)}
                     >
-                      Copy
+                      📋 Copy
                     </button>
                   </div>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-semibold mb-4">Alternative using wget:</h3>
-                  <div className="relative">
-                    <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                      <div>GOARCH=$(wget -qO- {baseUrl}/api/arch/$(uname -m))</div>
+                  <div className="relative group">
+                    <div className="bg-gray-900 dark:bg-gray-800 border border-gray-700 rounded-lg p-4 overflow-x-auto">
+                      <pre className="text-white font-mono text-sm whitespace-pre-wrap">
+                        <code>GOARCH=$(wget -qO- {baseUrl}/api/arch/$(uname -m))</code>
+                      </pre>
                     </div>
                     <button 
-                      className="absolute top-2 right-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/80"
+                      className="absolute top-3 right-3 px-3 py-1.5 text-xs font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                       onClick={() => navigator.clipboard.writeText(`GOARCH=$(wget -qO- ${baseUrl}/api/arch/$(uname -m))`)}
                     >
-                      Copy
+                      📋 Copy
                     </button>
                   </div>
                 </div>
